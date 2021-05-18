@@ -6,7 +6,7 @@ def initialize_db(conn_string):
     return engine
 
 class Property(Base):
-    __tablename__ = 'stockholm_estates'
+    __tablename__ = 'gavle_estates'
     id = Column(Integer, primary_key=True)
     url = Column(String(150))
     img_url = Column(String(150))

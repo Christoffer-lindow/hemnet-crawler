@@ -9,7 +9,7 @@ config = dotenv_values(".env")
 data_base = db.initialize_db(config["CONNECTION_STRING"])
 Session = sessionmaker(bind=data_base)
 session = Session()
-with open("data.json") as f:
+with open("gavle_apartments.json") as f:
     data = json.load(f)
 
 db.Property.__table__.create(bind=data_base, checkfirst=True)
@@ -46,6 +46,11 @@ for entity in data:
             property.balcony = True
         else: 
             property.balcony = False
+    if entity.get("Balkong") is None:
+        property.balcony = False
+    
+    if property.price_sqm is None and property.price is not None and property.area is not None:
+        property.price_sqm = property.price * property.area
 
     session.add(property)
     session.commit()
